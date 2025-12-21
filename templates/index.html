@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Dự đoán ảnh hưởng sử dụng điện thoại</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h4>📱 DỰ ĐOÁN MỨC ĐỘ ẢNH HƯỞNG SỬ DỤNG ĐIỆN THOẠI</h4>
+        </div>
+
+        <div class="card-body">
+            <form method="post">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Screen Time (giờ)</label>
+                        <input type="number" step="0.1" name="screen_time" class="form-control" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Social Time (giờ)</label>
+                        <input type="number" step="0.1" name="social_time" class="form-control" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Sleep Time (giờ)</label>
+                        <input type="number" step="0.1" name="sleep_time" class="form-control" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Age</label>
+                        <input type="number" name="age" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-success px-5">
+                        🔍 Dự đoán
+                    </button>
+                </div>
+            </form>
+
+            {% if result %}
+            <hr>
+
+            <div class="alert {% if probability >= 70 %}alert-danger
+                              {% elif probability >= 40 %}alert-warning
+                              {% else %}alert-success{% endif %}
+                              text-center fw-bold">
+                {{ result }} – Xác suất: {{ probability }}%
+            </div>
+            {% endif %}
+
+            {% if chart_path %}
+            <div class="text-center mt-4">
+                <h5>📊 Biểu đồ dữ liệu đầu vào & % dự đoán</h5>
+                <img src="{{ chart_path }}" class="img-fluid rounded shadow mt-3">
+                <p class="text-muted mt-2">
+                    🔵 Cột: dữ liệu người dùng &nbsp; | &nbsp; 🔴 Đường đỏ: xác suất dự đoán
+                </p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
